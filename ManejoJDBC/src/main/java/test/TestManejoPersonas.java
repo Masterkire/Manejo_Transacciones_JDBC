@@ -1,30 +1,49 @@
 package test;
 
+import datos.Conexion;
 import datos.PersonaDAO;
 import domain.Persona;
+import java.sql.*;
 import java.util.List;
 
 public class TestManejoPersonas {
     public static void main(String[] args) {
-        PersonaDAO personaDao = new PersonaDAO();
         
-        //Insertando un nuevo objeto de tipo persona
-//        Persona personaNueva = new Persona("Carlos", "Esparza", "cesparza@mail.com","5587652154");
-//        personaDao.insertar(personaNueva);
-        
-        //Modificar un objeto de persona existente
-//        Persona personaModificar = new Persona(4,"Juan Carlos", "Esparza", "jcesparza@mail.com", "5587652154");
-//        personaDao.actualizar(personaModificar);
+        Connection conexion = null;
+        try {
+            conexion = Conexion.getConnection();
+            if(conexion.getAutoCommit()){
+                conexion.setAutoCommit(false);
+            }
+            
+            PersonaDAO personaDao = new PersonaDAO(conexion);
+//            Persona personaModificada = new Persona();
+//            personaModificada.setIdPersona(2);
+//            personaModificada.setNombre("Karla Ivonne");
+//            personaModificada.setApellido("Lara");
+//            personaModificada.setEmail("klara@mail.com");
+//            personaModificada.setTelefono("5559664321");
+//            personaDao.actualizar(personaModificada);
+            
+//            Persona nuevaPersona = new Persona("Hector", "Romero seeeeeeeeeeeeeeeeeeeeffffffffffffffffffffffgggggggggggggggggggggggggggggggggggggggggggggggggggrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww", "hromero@mail.com","5598147635");
+//            Persona nuevaPersona = new Persona("Hector", "Romero", "hromero@mail.com","5598147635");
+//            personaDao.insertar(nuevaPersona);
 
-        //Eliminar un registro
-        Persona personaEliminar = new Persona(4);
-        personaDao.eliminar(personaEliminar);
-        
-        //Listar en pantalla los datos de personas
-        List<Persona> personas = personaDao.seleccionar();
-        
-        personas.forEach(persona -> {
-            System.out.println("persona = " + persona);
-        });
+            Persona personaEliminar = new Persona(6);
+            personaDao.eliminar(personaEliminar);
+            
+            conexion.commit();
+            System.out.println("Se ha echo commit de la transaccion");
+           
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace(System.out);
+            System.out.println("Entramos al rollback");
+            try {
+                conexion.rollback();
+            } catch (SQLException ex1) {
+                ex.printStackTrace(System.out);
+            }
+        }
     }
 }
