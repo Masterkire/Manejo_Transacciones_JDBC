@@ -72,6 +72,7 @@ public class PersonaDAO {
             stmt.setString(3, persona.getEmail());
             stmt.setString(4, persona.getTelefono());
             registros = stmt.executeUpdate();
+            System.out.println("Registros insertados: " + registros);
         } 
         finally{
             try {
@@ -100,6 +101,7 @@ public class PersonaDAO {
             stmt.setString(4, persona.getTelefono());
             stmt.setInt(5, persona.getIdPersona());
             registros = stmt.executeUpdate();
+            System.out.println("Registros actualizados: " + registros);
         } 
         finally{
             try {

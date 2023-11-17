@@ -29,11 +29,18 @@ public class TestManejoPersonas {
 //            Persona nuevaPersona = new Persona("Hector", "Romero", "hromero@mail.com","5598147635");
 //            personaDao.insertar(nuevaPersona);
 
-            Persona personaEliminar = new Persona(6);
-            personaDao.eliminar(personaEliminar);
+//            Persona personaEliminar = new Persona(6);
+//            personaDao.eliminar(personaEliminar);
+//            
+//            conexion.commit();
+//            System.out.println("Se ha echo commit de la transaccion");
             
-            conexion.commit();
-            System.out.println("Se ha echo commit de la transaccion");
+            //Listar registro en pantalla de personas
+            List<Persona> personas = personaDao.seleccionar();
+        
+            personas.forEach(persona -> {
+                System.out.println("Persona: " + persona);
+            });
            
             
         } catch (SQLException ex) {
